@@ -43,6 +43,8 @@
   },
   "dependencies": {
     "dotenv": "^16.4.7",
-    "mime-types": "^2.1.35"
+    "mime-types": "^2.1.35",
+    "pg-promise": "^11.10.2",
+    "zod": "^3.24.1"
   }
 }
