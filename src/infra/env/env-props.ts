@@ -6,7 +6,7 @@ export type EnvProps = {
   APP_WEB_URL: string;
 
   // Database
-  DATABASE_IMPLEMENTATION: 'prisma';
+  DATABASE_IMPLEMENTATION: 'postgresSql';
   DATABASE_URL: string;
   LOGGING: boolean;
 };
