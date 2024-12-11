@@ -6,7 +6,13 @@ export type EnvProps = {
   APP_WEB_URL: string;
 
   // Database
-  DATABASE_IMPLEMENTATION: 'postgresSql';
+  DATABASE_IMPLEMENTATION: 'postgreSql';
   DATABASE_URL: string;
   LOGGING: boolean;
+
+  // Storage
+  STORAGE_IMPLEMENTATION: 'disk';
+
+  // LLM
+  LLM_IMPLEMENTATION: 'openAi';
 };

@@ -13,9 +13,15 @@ class ZodEnv {
       APP_WEB_URL: z.string(),
 
       // Database
-      DATABASE_IMPLEMENTATION: z.enum(['prisma']),
+      DATABASE_IMPLEMENTATION: z.enum(['postgreSql']),
       DATABASE_URL: z.string(),
       LOGGING: z.coerce.boolean().default(false),
+
+      // Storage
+      STORAGE_IMPLEMENTATION: z.enum(['disk']),
+
+      // LLM
+      LLM_IMPLEMENTATION: z.enum(['openAi']),
     });
 
     const _env = envSchema.safeParse(envs);

@@ -1,12 +1,12 @@
-import Envs from './infra/env';
 import { EnvProps } from './infra/env/env-props';
+import EnvFactory from './infra/factories/envs/envs-factory';
 
 export let env: EnvProps;
 
 async function dynamicImports() {}
 
 (async () => {
-  env = Envs.getInstance().getEnvs();
+  env = await EnvFactory.loadEnvs({ test: false });
 
-  const {} = await dynamicImports();
+  // const {} = await dynamicImports();
 })();
