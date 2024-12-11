@@ -1,6 +1,6 @@
 import { IQuestionRepository } from '@/application/repositories/i-question-repository';
 import Question from '@/domain/entities/question';
-import DatabaseConfig from '@/infra/database/postgre-sql/database-config';
+import DatabaseConfig from '@/infra/database/postgre-sql/postgres-sql-database-config';
 
 class PostgreSqlQuestionRepository implements IQuestionRepository {
   constructor(private readonly databaseConfig: DatabaseConfig) {}
