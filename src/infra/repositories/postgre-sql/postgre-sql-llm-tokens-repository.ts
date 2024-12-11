@@ -1,6 +1,6 @@
 import { ILlmTokensRepository } from '@/application/repositories/i-llm-tokens-repository';
 import LlmTokens from '@/domain/entities/llm-tokens';
-import DatabaseConfig from '@/infra/database/postgre-sql/database-config';
+import DatabaseConfig from '@/infra/database/postgre-sql/postgres-sql-database-config';
 
 class PostgreSqlLlmTokensRepository implements ILlmTokensRepository {
   constructor(private readonly databaseConfig: DatabaseConfig) {}
