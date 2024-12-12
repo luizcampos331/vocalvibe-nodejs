@@ -1,9 +1,9 @@
+import { IDatabaseConfig } from '@/application/database/i-database-config';
 import { ILlmTokensRepository } from '@/application/repositories/i-llm-tokens-repository';
 import LlmTokens from '@/domain/entities/llm-tokens';
-import DatabaseConfig from '@/infra/database/postgre-sql/postgres-sql-database-config';
 
 class PostgreSqlLlmTokensRepository implements ILlmTokensRepository {
-  constructor(private readonly databaseConfig: DatabaseConfig) {}
+  constructor(private readonly databaseConfig: IDatabaseConfig) {}
 
   public async create(data: LlmTokens): Promise<void> {
     const dataJson = data.toJSON();

@@ -4,6 +4,7 @@ export type QuestionProps = EntityProps & {
   createdBy: string;
   context: string;
   content: string;
+  duration: number;
 };
 
 export type QuestionJSON = QuestionProps & EntityJSON;
@@ -12,12 +13,14 @@ class Question extends Entity {
   private readonly _createdBy: string;
   private readonly _context: string;
   private readonly _content: string;
+  private readonly _duration: number;
 
   constructor(props: QuestionProps) {
     super(props);
     this._createdBy = props.createdBy;
     this._context = props.context;
     this._content = props.content;
+    this._duration = props.duration;
   }
 
   public static create(props: QuestionProps): Question {
@@ -30,6 +33,7 @@ class Question extends Entity {
       createdBy: this._createdBy,
       context: this._context,
       content: this._content,
+      duration: this._duration,
       createdAt: this._createdAt,
       updatedAt: this._updatedAt,
       deletedAt: this._deletedAt,
