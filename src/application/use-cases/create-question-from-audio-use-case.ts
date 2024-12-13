@@ -28,7 +28,7 @@ class CreateQuestionFromAudioUseCase {
     audioFilename,
   }: CreateQuestionFromAudioUseCaseInput): Promise<void> {
     try {
-      // await this.databaseConfig.startTransaction();
+      await this.databaseConfig.startTransaction();
 
       if (!audioFilename) {
         throw new ApplicationError('Audio not found');

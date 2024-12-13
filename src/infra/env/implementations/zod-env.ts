@@ -19,7 +19,7 @@ class ZodEnv {
       // Database
       DATABASE_IMPLEMENTATION: z.enum(['postgreSQL']),
       DATABASE_URL: z.string(),
-      LOGGING: z.coerce.boolean().default(false),
+      DATABASE_LOG: z.coerce.boolean().default(false),
 
       // Storage
       STORAGE_IMPLEMENTATION: z.enum(['disk']),

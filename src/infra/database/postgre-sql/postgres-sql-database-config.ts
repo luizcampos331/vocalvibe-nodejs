@@ -10,6 +10,12 @@ class PostgreSqlDatabaseConfig implements IDatabaseConfig {
     this.client = pgPromise()({
       connectionString: env.DATABASE_URL,
     });
+
+    if (env.DATABASE_LOG) {
+      this.client.$config.options.query = e => {
+        console.log('QUERY RUNNED:', e.query);
+      };
+    }
   }
 
   public async query(query: string, params: any[]): Promise<any> {
@@ -23,21 +29,21 @@ class PostgreSqlDatabaseConfig implements IDatabaseConfig {
   public async startTransaction(): Promise<void> {
     if (!this.transactionStarted) {
       this.transactionStarted = true;
-      await this.client.one('BEGIN');
+      await this.client.none('BEGIN');
     }
   }
 
   public async commit(): Promise<void> {
     if (this.transactionStarted) {
       this.transactionStarted = false;
-      await this.client.one('COMMIT');
+      await this.client.none('COMMIT');
     }
   }
 
   public async rollback(): Promise<void> {
     if (this.transactionStarted) {
       this.transactionStarted = false;
-      await this.client.one('ROLLBACK');
+      await this.client.none('ROLLBACK');
     }
   }
 }

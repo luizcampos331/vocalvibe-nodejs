@@ -12,7 +12,7 @@ export type EnvProps = {
   // Database
   DATABASE_IMPLEMENTATION: 'postgreSQL';
   DATABASE_URL: string;
-  LOGGING: boolean;
+  DATABASE_LOG: boolean;
 
   // Storage
   STORAGE_IMPLEMENTATION: 'disk';
