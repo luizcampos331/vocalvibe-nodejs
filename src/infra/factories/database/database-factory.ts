@@ -3,12 +3,12 @@ import { InfrastructureError } from '@/infra/errors/infrastructure-error';
 import { env } from '@/main';
 
 const implementations = {
-  postgreSql: new PostgreSqlDatabaseConfig(),
+  postgreSQL: new PostgreSqlDatabaseConfig(),
 };
 
 class DatabaseFactory {
   public make() {
-    if (!Object.keys(this).includes(env.DATABASE_IMPLEMENTATION)) {
+    if (!Object.keys(implementations).includes(env.DATABASE_IMPLEMENTATION)) {
       throw new InfrastructureError(
         'Invalid database implementation - postgreSQL',
       );

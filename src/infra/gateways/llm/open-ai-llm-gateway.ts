@@ -6,12 +6,13 @@ import {
 import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
+import { env } from '@/main';
 
 class OpenAiLlmGateway implements ILlmGateway {
   private client: OpenAI;
 
   constructor() {
-    this.client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    this.client = new OpenAI({ apiKey: env.OPENAI_API_KEY });
   }
   public async transcribeAudio({
     filename,

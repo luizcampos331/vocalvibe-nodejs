@@ -11,9 +11,13 @@ class ZodEnv {
 
       // Application
       APP_WEB_URL: z.string(),
+      HTTP_IMPLEMENTATION: z.enum(['express']),
+      HTTP_PORT: z.coerce.number().default(3333),
+      DOMAIN: z.string(),
+      REQUEST_BODY_LIMIT: z.string(),
 
       // Database
-      DATABASE_IMPLEMENTATION: z.enum(['postgreSql']),
+      DATABASE_IMPLEMENTATION: z.enum(['postgreSQL']),
       DATABASE_URL: z.string(),
       LOGGING: z.coerce.boolean().default(false),
 
@@ -22,6 +26,7 @@ class ZodEnv {
 
       // LLM
       LLM_IMPLEMENTATION: z.enum(['openAi']),
+      OPENAI_API_KEY: z.string(),
     });
 
     const _env = envSchema.safeParse(envs);

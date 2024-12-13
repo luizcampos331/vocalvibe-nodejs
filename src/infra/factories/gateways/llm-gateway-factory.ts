@@ -8,7 +8,7 @@ const implementations = {
 
 class LlmGatewayFactory {
   public make() {
-    if (!Object.keys(this).includes(env.LLM_IMPLEMENTATION)) {
+    if (!Object.keys(implementations).includes(env.LLM_IMPLEMENTATION)) {
       throw new InfrastructureError('Invalid gateway implementation - LLM');
     }
     return implementations[env.LLM_IMPLEMENTATION];

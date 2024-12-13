@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
-import ZodEnv from '@/infra/env/zod/zod-env';
 import { InfrastructureError } from '@/infra/errors/infrastructure-error';
 import { EnvProps } from '@/infra/env/env-props';
+import ZodEnv from '@/infra/env/implementations/zod-env';
 
 const implementations = {
   zod: new ZodEnv(),
@@ -26,7 +26,7 @@ class EnvFactory {
     return new Promise(resolve => {
       resolve(
         implementations[
-          (process.env.DATABASE_IMPLEMENTATION ||
+          (process.env.ENVS_IMPLEMENTATION ||
             'zod') as keyof typeof implementations
         ].validateEnv(process.env),
       );

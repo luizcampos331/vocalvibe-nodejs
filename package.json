@@ -4,7 +4,7 @@
   "description": "A system to learn English focusing on conversation",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --poll -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/infra/http/index.ts",
+    "dev": "ts-node-dev --poll -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/main.ts",
     "start": "node ./build/infra/http/index.js",
     "build": "tsup src --out-dir build",
     "lint": "tsc --skipLibCheck --noEmit && eslint --ext .ts src/",
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/luizcampos331/vocalvibe-nodejs#readme",
   "devDependencies": {
+    "@types/express": "^5.0.0",
     "@types/mime-types": "^2.1.4",
     "@types/node": "^22.10.1",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
@@ -42,8 +43,12 @@
     "vitest": "^2.1.8"
   },
   "dependencies": {
+    "@types/multer": "^1.4.12",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
     "mime-types": "^2.1.35",
+    "multer": "^1.4.5-lts.1",
     "openai": "^4.76.1",
     "pg-promise": "^11.10.2",
     "zod": "^3.24.1"
