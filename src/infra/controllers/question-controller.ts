@@ -13,15 +13,14 @@ class QuestionController {
     httpServer.registerRoute({
       method: 'post',
       url: this.urlBase,
-      middlewares: { uploadFile: 'audio' },
-      callback: async ({ body: { data, file } }) => {
+      callback: async ({ body: { userId, context, content } }) => {
         const createQuestionFromAudioUseCase =
           new CreateQuestionFromAudioFactory().make();
 
         await createQuestionFromAudioUseCase.execute({
-          userId: data.userId,
-          context: data.context,
-          audioFilename: file?.filename,
+          userId,
+          context,
+          content,
         });
 
         return {

@@ -2,16 +2,16 @@ import Question from '@/domain/entities/question';
 import FileTmp from '@/domain/value-object/file-tmp';
 import { ExceptionError } from '@/shared/errors/exception-error';
 import { HandleError } from '@/shared/errors/handle-error';
+import FileFolder from '@/shared/enum/file-folder';
 import { IQuestionRepository } from '../repositories/i-question-repository';
 import { IStorageGateway } from '../gateways/i-storage-gateway';
 import { ILlmGateway } from '../gateways/i-llm-gateway';
 import { IDatabaseConfig } from '../database/i-database-config';
-import { ApplicationError } from '../errors/application-error';
 
 export type CreateQuestionFromAudioUseCaseInput = {
   userId: string;
   context: string;
-  audioFilename?: string;
+  content: string;
 };
 
 class CreateQuestionFromAudioUseCase {
@@ -25,36 +25,34 @@ class CreateQuestionFromAudioUseCase {
   public async execute({
     userId,
     context,
-    audioFilename,
+    content,
   }: CreateQuestionFromAudioUseCaseInput): Promise<void> {
     try {
       await this.databaseConfig.startTransaction();
 
-      if (!audioFilename) {
-        throw new ApplicationError('Audio not found');
-      }
-
-      const { fileSize, contentType, content } = await new FileTmp(
-        audioFilename,
-      ).getInfos();
-
-      await this.storageGateway.save({
-        filename: audioFilename,
-        fileSize,
+      const { audio } = await this.llmGateway.generateAudio({
         content,
-        contentType,
-        folder: 'question-audio',
       });
 
-      const { text, duration } = await this.llmGateway.transcribeAudio({
-        filename: audioFilename,
+      const file = new FileTmp('question.mp3');
+      await file.saveTmp(audio);
+
+      const { filename, fileSize, contentType } = await file.getInfos();
+
+      await this.storageGateway.save({
+        filename,
+        fileSize,
+        content: audio,
+        contentType,
+        folder: FileFolder.questionAudio,
       });
 
       const question = Question.create({
         createdBy: userId,
         context,
-        content: text,
-        duration,
+        content,
+        filename,
+        duration: 0,
       });
 
       await this.questionRepository.create(question);

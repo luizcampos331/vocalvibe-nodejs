@@ -15,9 +15,10 @@ class Multer {
           '..',
           '..',
           '..',
+          '..',
           'tmp',
         ),
-        filename(request, file, callback) {
+        filename(_, file, callback) {
           let { originalname } = file;
           originalname = Buffer.from(file.originalname, 'latin1').toString(
             'utf-8',

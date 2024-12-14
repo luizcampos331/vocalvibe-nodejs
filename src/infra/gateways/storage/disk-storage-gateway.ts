@@ -2,8 +2,8 @@ import {
   IStorageGateway,
   SaveStorageInput,
 } from '@/application/gateways/i-storage-gateway';
+import FileTmp from '@/domain/value-object/file-tmp';
 import fs from 'fs';
-import path from 'path';
 
 class DiskStorageGateway implements IStorageGateway {
   public async save({
@@ -11,11 +11,12 @@ class DiskStorageGateway implements IStorageGateway {
     filename,
     folder,
   }: SaveStorageInput): Promise<void> {
-    await fs.promises.mkdir(path.resolve(__dirname, `../../../tmp/${folder}`));
+    const filePathTmp = new FileTmp(filename).getFilePath();
     await fs.promises.appendFile(
-      path.resolve(__dirname, `../../../../tmp/${folder}/${filename}`),
+      `${filePathTmp}/${folder}/${filename}`,
       content,
     );
+    await fs.promises.unlink(`${filePathTmp}/${filename}`);
   }
 }
 

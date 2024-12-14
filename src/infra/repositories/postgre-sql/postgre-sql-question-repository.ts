@@ -8,12 +8,13 @@ class PostgreSqlQuestionRepository implements IQuestionRepository {
   public async create(data: Question): Promise<void> {
     const dataJson = data.toJSON();
     await this.databaseConfig.query(
-      'INSERT INTO question (id, created_by, context, content, duration, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+      'INSERT INTO questions (id, created_by, context, content, filename, duration, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
       [
         dataJson.id,
         dataJson.createdBy,
         dataJson.context,
         dataJson.content,
+        dataJson.filename,
         dataJson.duration,
         dataJson.createdAt,
         dataJson.updatedAt,

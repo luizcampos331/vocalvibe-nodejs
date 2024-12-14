@@ -4,6 +4,7 @@ export type QuestionProps = EntityProps & {
   createdBy: string;
   context: string;
   content: string;
+  filename: string;
   duration: number;
 };
 
@@ -13,6 +14,7 @@ class Question extends Entity {
   private readonly _createdBy: string;
   private readonly _context: string;
   private readonly _content: string;
+  private readonly _filename: string;
   private readonly _duration: number;
 
   constructor(props: QuestionProps) {
@@ -20,6 +22,7 @@ class Question extends Entity {
     this._createdBy = props.createdBy;
     this._context = props.context;
     this._content = props.content;
+    this._filename = props.filename;
     this._duration = props.duration;
   }
 
@@ -33,6 +36,7 @@ class Question extends Entity {
       createdBy: this._createdBy,
       context: this._context,
       content: this._content,
+      filename: this._filename,
       duration: this._duration,
       createdAt: this._createdAt,
       updatedAt: this._updatedAt,
