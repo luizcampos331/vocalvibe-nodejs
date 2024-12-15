@@ -13,14 +13,11 @@ class QuestionController {
     httpServer.registerRoute({
       method: 'post',
       url: `${this.urlBase}/from-audio`,
-      callback: async ({
-        body: { userId, context, nativeLanguage, goalLanguage },
-      }) => {
+      callback: async ({ body: { context, nativeLanguage, goalLanguage } }) => {
         const createQuestionFromAudioUseCase =
           new CreateQuestionFromAudioFactory().make();
 
         await createQuestionFromAudioUseCase.execute({
-          userId,
           context,
           nativeLanguage,
           goalLanguage,

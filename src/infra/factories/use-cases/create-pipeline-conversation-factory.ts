@@ -1,4 +1,4 @@
-import CreatePipelineConversationUseCase from '@/application/use-cases/create-pipeline-conversation-use.-case';
+import CreatePipelineConversationUseCase from '@/application/use-cases/create-pipeline-conversation-use-case';
 import DatabaseFactory from '../database/database-factory';
 import LlmGatewayFactory from '../gateways/llm-gateway-factory';
 import QuestionRepositoryFactory from '../repositories/question-repository-factory';

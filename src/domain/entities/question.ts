@@ -1,7 +1,6 @@
 import Entity, { EntityJSON, EntityProps } from './entity';
 
 export type QuestionProps = EntityProps & {
-  createdBy: string;
   context: string;
   nativeLanguage: string;
   goalLanguage: string;
@@ -12,7 +11,6 @@ export type QuestionProps = EntityProps & {
 export type QuestionJSON = QuestionProps & EntityJSON;
 
 class Question extends Entity {
-  private readonly _createdBy: string;
   private readonly _context: string;
   private readonly _nativeLanguage: string;
   private readonly _goalLanguage: string;
@@ -21,7 +19,6 @@ class Question extends Entity {
 
   constructor(props: QuestionProps) {
     super(props);
-    this._createdBy = props.createdBy;
     this._context = props.context;
     this._nativeLanguage = props.nativeLanguage;
     this._goalLanguage = props.goalLanguage;
@@ -44,7 +41,6 @@ class Question extends Entity {
   public toJSON(): QuestionJSON {
     return {
       id: this._id,
-      createdBy: this._createdBy,
       context: this._context,
       nativeLanguage: this._nativeLanguage,
       goalLanguage: this._goalLanguage,

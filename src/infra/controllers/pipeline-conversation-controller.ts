@@ -13,13 +13,11 @@ class PipelineConversationController {
     httpServer.registerRoute({
       method: 'post',
       url: this.urlBase,
-      callback: async ({ body: { userId } }) => {
+      callback: async () => {
         const createPipelineConversationUseCase =
           new CreatePipelineConversationFactory().make();
 
-        await createPipelineConversationUseCase.execute({
-          userId,
-        });
+        await createPipelineConversationUseCase.execute();
 
         return {
           statusCode: StatusCode.CREATED,

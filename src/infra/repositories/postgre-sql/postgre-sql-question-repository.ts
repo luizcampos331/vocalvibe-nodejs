@@ -9,7 +9,6 @@ class PostgreSqlQuestionRepository implements IQuestionRepository {
     const [questions] = await this.databaseConfig.query(
       `SELECT
         id,
-        created_by AS "createdBy",
         context,
         native_language AS "nativeLanguage",
         goal_language AS "goalLanguage",
@@ -27,10 +26,9 @@ class PostgreSqlQuestionRepository implements IQuestionRepository {
   public async create(data: Question): Promise<void> {
     const dataJson = data.toJSON();
     await this.databaseConfig.query(
-      'INSERT INTO questions (id, created_by, context, native_language, goal_language, filename, duration, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+      'INSERT INTO questions (id, context, native_language, goal_language, filename, duration, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
       [
         dataJson.id,
-        dataJson.createdBy,
         dataJson.context,
         dataJson.nativeLanguage,
         dataJson.goalLanguage,

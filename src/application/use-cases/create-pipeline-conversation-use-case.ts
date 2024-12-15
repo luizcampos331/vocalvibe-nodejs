@@ -13,10 +13,6 @@ import { IPipelineConversationRepository } from '../repositories/i-pipeline-conv
 import { IPipelineConversationQuestionRepository } from '../repositories/i-pipeline-conversation-question-respository';
 import { ApplicationError } from '../errors/application-error';
 
-export type CreatePipelineConversationUseCaseInput = {
-  userId: string;
-};
-
 class CreatePipelineConversationUseCase {
   constructor(
     private readonly questionRepository: IQuestionRepository,
@@ -27,9 +23,7 @@ class CreatePipelineConversationUseCase {
     private readonly databaseConfig: IDatabaseConfig,
   ) {}
 
-  public async execute({
-    userId,
-  }: CreatePipelineConversationUseCaseInput): Promise<void> {
+  public async execute(): Promise<void> {
     try {
       await this.databaseConfig.startTransaction();
 
@@ -41,7 +35,7 @@ class CreatePipelineConversationUseCase {
             {
               role: 'system',
               content:
-                'You are a supreme expert in analyzing and creating logical sequences of questions based on a large list of them. Your objective is:\n- Analyze all the interview questions\n- Create a logical sequence with 20 of them\n- Return ONLY their numbers, separated by commas',
+                'You are a supreme expert in analyzing and creating logical sequences of questions based on a large list of them. Your objective is:\n- Analyze all the interview questions\n- Create a logical sequence with 20 maximum questions of them\n- Return ONLY their numbers, separated by commas',
             },
             {
               role: 'user',
@@ -68,7 +62,6 @@ class CreatePipelineConversationUseCase {
       );
 
       const pipelineConversation = PipelineConversation.create({
-        createdBy: userId,
         status: PipelineConversationStatus.create,
       });
 

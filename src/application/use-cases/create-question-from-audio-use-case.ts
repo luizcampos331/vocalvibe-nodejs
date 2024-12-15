@@ -9,7 +9,6 @@ import { ILlmGateway } from '../gateways/i-llm-gateway';
 import { IDatabaseConfig } from '../database/i-database-config';
 
 export type CreateQuestionFromAudioUseCaseInput = {
-  userId: string;
   context: string;
   nativeLanguage: string;
   goalLanguage: string;
@@ -24,7 +23,6 @@ class CreateQuestionFromAudioUseCase {
   ) {}
 
   public async execute({
-    userId,
     context,
     nativeLanguage,
     goalLanguage,
@@ -50,7 +48,6 @@ class CreateQuestionFromAudioUseCase {
       });
 
       const question = Question.create({
-        createdBy: userId,
         context,
         goalLanguage,
         nativeLanguage,
