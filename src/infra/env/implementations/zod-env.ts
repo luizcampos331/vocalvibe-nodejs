@@ -27,6 +27,9 @@ class ZodEnv {
       // LLM
       LLM_IMPLEMENTATION: z.enum(['openAi']),
       OPENAI_API_KEY: z.string(),
+      OPENAI_MODEL: z.string(),
+      OPENAI_TEMPERATURE: z.coerce.number(),
+      OPENAI_MAX_TOKENS: z.coerce.number(),
     });
 
     const _env = envSchema.safeParse(envs);

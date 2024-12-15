@@ -3,7 +3,7 @@ import CreateQuestionFromAudioFactory from '../factories/use-cases/create-questi
 import { IHttpServer } from '../http/i-http-server';
 
 class QuestionController {
-  private urlBase = '/question';
+  private urlBase = '/questions';
 
   constructor(readonly httpServer: IHttpServer) {
     this.createFromAudio(httpServer);
@@ -12,15 +12,18 @@ class QuestionController {
   private createFromAudio(httpServer: IHttpServer) {
     httpServer.registerRoute({
       method: 'post',
-      url: this.urlBase,
-      callback: async ({ body: { userId, context, content } }) => {
+      url: `${this.urlBase}/from-audio`,
+      callback: async ({
+        body: { userId, context, nativeLanguage, goalLanguage },
+      }) => {
         const createQuestionFromAudioUseCase =
           new CreateQuestionFromAudioFactory().make();
 
         await createQuestionFromAudioUseCase.execute({
           userId,
           context,
-          content,
+          nativeLanguage,
+          goalLanguage,
         });
 
         return {

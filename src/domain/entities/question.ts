@@ -3,7 +3,8 @@ import Entity, { EntityJSON, EntityProps } from './entity';
 export type QuestionProps = EntityProps & {
   createdBy: string;
   context: string;
-  content: string;
+  nativeLanguage: string;
+  goalLanguage: string;
   filename: string;
   duration: number;
 };
@@ -13,7 +14,8 @@ export type QuestionJSON = QuestionProps & EntityJSON;
 class Question extends Entity {
   private readonly _createdBy: string;
   private readonly _context: string;
-  private readonly _content: string;
+  private readonly _nativeLanguage: string;
+  private readonly _goalLanguage: string;
   private readonly _filename: string;
   private readonly _duration: number;
 
@@ -21,9 +23,18 @@ class Question extends Entity {
     super(props);
     this._createdBy = props.createdBy;
     this._context = props.context;
-    this._content = props.content;
+    this._nativeLanguage = props.nativeLanguage;
+    this._goalLanguage = props.goalLanguage;
     this._filename = props.filename;
     this._duration = props.duration;
+  }
+
+  public get goalLanguage() {
+    return this._goalLanguage;
+  }
+
+  public get filename() {
+    return this._filename;
   }
 
   public static create(props: QuestionProps): Question {
@@ -35,7 +46,8 @@ class Question extends Entity {
       id: this._id,
       createdBy: this._createdBy,
       context: this._context,
-      content: this._content,
+      nativeLanguage: this._nativeLanguage,
+      goalLanguage: this._goalLanguage,
       filename: this._filename,
       duration: this._duration,
       createdAt: this._createdAt,

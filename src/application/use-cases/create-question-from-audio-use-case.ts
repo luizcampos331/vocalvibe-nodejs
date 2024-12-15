@@ -11,7 +11,8 @@ import { IDatabaseConfig } from '../database/i-database-config';
 export type CreateQuestionFromAudioUseCaseInput = {
   userId: string;
   context: string;
-  content: string;
+  nativeLanguage: string;
+  goalLanguage: string;
 };
 
 class CreateQuestionFromAudioUseCase {
@@ -25,13 +26,14 @@ class CreateQuestionFromAudioUseCase {
   public async execute({
     userId,
     context,
-    content,
+    nativeLanguage,
+    goalLanguage,
   }: CreateQuestionFromAudioUseCaseInput): Promise<void> {
     try {
       await this.databaseConfig.startTransaction();
 
       const { audio } = await this.llmGateway.generateAudio({
-        content,
+        content: goalLanguage,
       });
 
       const file = new FileTmp('question.mp3');
@@ -50,7 +52,8 @@ class CreateQuestionFromAudioUseCase {
       const question = Question.create({
         createdBy: userId,
         context,
-        content,
+        goalLanguage,
+        nativeLanguage,
         filename,
         duration: 0,
       });

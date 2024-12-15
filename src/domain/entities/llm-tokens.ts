@@ -1,7 +1,7 @@
 import Entity, { EntityJSON, EntityProps } from './entity';
 
 export enum LlmTokensEntity {
-  question,
+  sequentialQuestions,
 }
 
 export type LlmTokensProps = EntityProps & {

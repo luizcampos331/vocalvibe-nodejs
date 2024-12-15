@@ -3,6 +3,9 @@ export interface ILlmGateway {
   transcribeAudio(
     data: TranscribeLlmAudioInput,
   ): Promise<TranscribeLlmAudioOutput>;
+  getResponseByText(
+    data: GetLlmResponseByTextInput,
+  ): Promise<GetLlmResponseOutput>;
 }
 
 export type GenerateLlmAudioInput = {
@@ -20,4 +23,19 @@ export type TranscribeLlmAudioInput = {
 export type TranscribeLlmAudioOutput = {
   text: string;
   duration: number;
+};
+
+type Messages = {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+};
+
+export type GetLlmResponseByTextInput = {
+  messages: Messages[];
+};
+
+export type GetLlmResponseOutput = {
+  response: any;
+  inputToken: number;
+  outputToken: number;
 };

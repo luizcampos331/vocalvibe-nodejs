@@ -20,4 +20,7 @@ export type EnvProps = {
   // LLM
   LLM_IMPLEMENTATION: 'openAi';
   OPENAI_API_KEY: string;
+  OPENAI_MODEL: string;
+  OPENAI_TEMPERATURE: number;
+  OPENAI_MAX_TOKENS: number;
 };
