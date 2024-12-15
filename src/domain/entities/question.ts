@@ -5,7 +5,6 @@ export type QuestionProps = EntityProps & {
   nativeLanguage: string;
   goalLanguage: string;
   filename: string;
-  duration: number;
 };
 
 export type QuestionJSON = QuestionProps & EntityJSON;
@@ -15,7 +14,6 @@ class Question extends Entity {
   private readonly _nativeLanguage: string;
   private readonly _goalLanguage: string;
   private readonly _filename: string;
-  private readonly _duration: number;
 
   constructor(props: QuestionProps) {
     super(props);
@@ -23,7 +21,6 @@ class Question extends Entity {
     this._nativeLanguage = props.nativeLanguage;
     this._goalLanguage = props.goalLanguage;
     this._filename = props.filename;
-    this._duration = props.duration;
   }
 
   public get goalLanguage() {
@@ -45,7 +42,6 @@ class Question extends Entity {
       nativeLanguage: this._nativeLanguage,
       goalLanguage: this._goalLanguage,
       filename: this._filename,
-      duration: this._duration,
       createdAt: this._createdAt,
       updatedAt: this._updatedAt,
       deletedAt: this._deletedAt,

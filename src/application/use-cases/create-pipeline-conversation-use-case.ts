@@ -52,15 +52,6 @@ class CreatePipelineConversationUseCase {
         throw new ApplicationError('Invalid response from LLM');
       }
 
-      await this.llmTokensRepository.create(
-        LlmTokens.create({
-          entity: LlmTokensEntity.sequentialQuestions,
-          inputTokens: inputToken,
-          outputTokens: outputToken,
-          entityId: response,
-        }),
-      );
-
       const pipelineConversation = PipelineConversation.create({
         status: PipelineConversationStatus.create,
       });
@@ -78,6 +69,15 @@ class CreatePipelineConversationUseCase {
           }),
         );
       }
+
+      await this.llmTokensRepository.create(
+        LlmTokens.create({
+          entity: LlmTokensEntity.sequentialQuestions,
+          inputTokens: inputToken,
+          outputTokens: outputToken,
+          entityId: pipelineConversation.id,
+        }),
+      );
 
       await this.databaseConfig.commit();
     } catch (error) {

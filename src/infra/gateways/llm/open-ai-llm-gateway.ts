@@ -48,8 +48,6 @@ class OpenAiLlmGateway implements ILlmGateway {
 
     const buffer = Buffer.from(await mp3.arrayBuffer());
 
-    console.log('mp3', mp3);
-
     return {
       audio: buffer,
     };

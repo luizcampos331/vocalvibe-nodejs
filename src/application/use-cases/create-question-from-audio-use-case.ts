@@ -52,7 +52,6 @@ class CreateQuestionFromAudioUseCase {
         goalLanguage,
         nativeLanguage,
         filename,
-        duration: 0,
       });
 
       await this.questionRepository.create(question);
