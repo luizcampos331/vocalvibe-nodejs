@@ -1,11 +1,19 @@
 import {
+  GetStorageInput,
   IStorageGateway,
   SaveStorageInput,
 } from '@/application/gateways/i-storage-gateway';
 import FileTmp from '@/domain/value-object/file-tmp';
 import fs from 'fs';
+import path from 'path';
 
 class DiskStorageGateway implements IStorageGateway {
+  public async get({ filename, folder }: GetStorageInput): Promise<Buffer> {
+    return fs.promises.readFile(
+      path.resolve(__dirname, `../../../../tmp/${folder}/${filename}`),
+    );
+  }
+
   public async save({
     content,
     filename,

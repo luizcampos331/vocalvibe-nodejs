@@ -13,6 +13,10 @@ import { IPipelineConversationRepository } from '../repositories/i-pipeline-conv
 import { IPipelineConversationQuestionRepository } from '../repositories/i-pipeline-conversation-question-respository';
 import { ApplicationError } from '../errors/application-error';
 
+export type CreatePipelineConversationOutput = {
+  id: string;
+};
+
 class CreatePipelineConversationUseCase {
   constructor(
     private readonly questionRepository: IQuestionRepository,
@@ -23,7 +27,7 @@ class CreatePipelineConversationUseCase {
     private readonly databaseConfig: IDatabaseConfig,
   ) {}
 
-  public async execute(): Promise<void> {
+  public async execute(): Promise<CreatePipelineConversationOutput> {
     try {
       await this.databaseConfig.startTransaction();
 
@@ -64,8 +68,7 @@ class CreatePipelineConversationUseCase {
         await this.pipelineConversationQuestionRepository.create(
           PipelineConversationQuestion.create({
             pipelineConversationId: pipelineConversation.id,
-            question: question.goalLanguage,
-            filename: question.filename,
+            questionId: question.id,
           }),
         );
       }
@@ -80,6 +83,10 @@ class CreatePipelineConversationUseCase {
       );
 
       await this.databaseConfig.commit();
+
+      return {
+        id: pipelineConversation.id,
+      };
     } catch (error) {
       await this.databaseConfig.rollback();
 

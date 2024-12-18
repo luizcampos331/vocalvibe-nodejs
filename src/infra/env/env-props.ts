@@ -23,4 +23,11 @@ export type EnvProps = {
   OPENAI_MODEL: string;
   OPENAI_TEMPERATURE: number;
   OPENAI_MAX_TOKENS: number;
+
+  // Events
+  SEND_QUESTION_TO_USER_EVENT: string;
+
+  // Websocket
+  WEBSOCKET_IMPLEMENTATION: 'socketIo';
+  CONVERSATION_ROOM: string;
 };

@@ -30,6 +30,13 @@ class ZodEnv {
       OPENAI_MODEL: z.string(),
       OPENAI_TEMPERATURE: z.coerce.number(),
       OPENAI_MAX_TOKENS: z.coerce.number(),
+
+      // Events
+      SEND_QUESTION_TO_USER_EVENT: z.string(),
+
+      // Websocket
+      WEBSOCKET_IMPLEMENTATION: z.enum(['socketIo']),
+      CONVERSATION_ROOM: z.string(),
     });
 
     const _env = envSchema.safeParse(envs);

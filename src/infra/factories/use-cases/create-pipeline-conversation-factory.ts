@@ -9,24 +9,12 @@ import LlmTokensRepositoryFactory from '../repositories/llm-tokens-repository-fa
 class CreatePipelineConversationFactory {
   public make() {
     const databaseConfig = new DatabaseFactory().make();
-    const questionRepository = new QuestionRepositoryFactory().make(
-      databaseConfig,
-    );
-    const llmTokensRepository = new LlmTokensRepositoryFactory().make(
-      databaseConfig,
-    );
-    const pipelineConversationRepository =
-      new PipelineConversationRepositoryFactory().make(databaseConfig);
-    const pipelineConversationQuestionRepository =
-      new PipelineConversationQuestionRepositoryFactory().make(databaseConfig);
-    const llmGateway = new LlmGatewayFactory().make();
-
     return new CreatePipelineConversationUseCase(
-      questionRepository,
-      llmTokensRepository,
-      pipelineConversationRepository,
-      pipelineConversationQuestionRepository,
-      llmGateway,
+      new QuestionRepositoryFactory().make(databaseConfig),
+      new LlmTokensRepositoryFactory().make(databaseConfig),
+      new PipelineConversationRepositoryFactory().make(databaseConfig),
+      new PipelineConversationQuestionRepositoryFactory().make(databaseConfig),
+      new LlmGatewayFactory().make(),
       databaseConfig,
     );
   }

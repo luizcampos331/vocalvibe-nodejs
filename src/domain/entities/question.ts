@@ -23,6 +23,10 @@ class Question extends Entity {
     this._filename = props.filename;
   }
 
+  public get nativeLanguage() {
+    return this._nativeLanguage;
+  }
+
   public get goalLanguage() {
     return this._goalLanguage;
   }

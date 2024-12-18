@@ -7,16 +7,10 @@ import LlmGatewayFactory from '../gateways/llm-gateway-factory';
 class CreateQuestionFromAudioFactory {
   public make() {
     const databaseConfig = new DatabaseFactory().make();
-    const questionRepository = new QuestionRepositoryFactory().make(
-      databaseConfig,
-    );
-    const storageGateway = new StorageGatewayFactory().make();
-    const llmGateway = new LlmGatewayFactory().make();
-
     return new CreateQuestionFromAudioUseCase(
-      questionRepository,
-      storageGateway,
-      llmGateway,
+      new QuestionRepositoryFactory().make(databaseConfig),
+      new StorageGatewayFactory().make(),
+      new LlmGatewayFactory().make(),
       databaseConfig,
     );
   }

@@ -58,12 +58,13 @@ class ExpressHttpServer implements IHttpServer {
     );
   }
 
-  public registerAfterMiddlewares(): void {
+  private registerAfterMiddlewares(): void {
     this.app.use(globalErrors);
   }
 
-  public listen(port: number, callback?: () => void): void {
-    this.app.listen(port, callback);
+  public getClient(): Express {
+    this.registerAfterMiddlewares();
+    return this.app;
   }
 }
 

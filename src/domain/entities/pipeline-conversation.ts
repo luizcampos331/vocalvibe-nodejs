@@ -1,3 +1,4 @@
+import { DomainError } from '../errors/domain-error';
 import Entity, { EntityJSON, EntityProps } from './entity';
 
 export enum PipelineConversationStatus {
@@ -14,7 +15,7 @@ export type PipelineConversationProps = EntityProps & {
 export type PipelineConversationJSON = PipelineConversationProps & EntityJSON;
 
 class PipelineConversation extends Entity {
-  private readonly _status: PipelineConversationStatus;
+  private _status: PipelineConversationStatus;
 
   constructor(props: PipelineConversationProps) {
     super(props);
@@ -33,6 +34,16 @@ class PipelineConversation extends Entity {
       updatedAt: this._updatedAt,
       deletedAt: this._deletedAt,
     };
+  }
+
+  public start() {
+    if (this._status !== PipelineConversationStatus.create) {
+      throw new DomainError(
+        'Invalid status for pipeline conversation to be initiated',
+      );
+    }
+    this._status = PipelineConversationStatus.inProgress;
+    this.setUpdatedAt();
   }
 }
 

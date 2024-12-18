@@ -3,8 +3,7 @@ import StatusCode from '@/infra/http/enums/status-code';
 export interface IHttpServer {
   registerMiddlewaresRoute(data?: Middlewares): any[];
   registerRoute(data: IRegisterHttpServer): void;
-  registerAfterMiddlewares(): void;
-  listen(port: number, callback: () => void): void;
+  getClient(): any;
 }
 
 export type IRegisterHttpServer = {

@@ -44,13 +44,13 @@ abstract class Entity {
     return this._deletedAt;
   }
 
-  protected setUpdatedAt(updatedAt: Date) {
-    this._updatedAt = updatedAt;
+  protected setUpdatedAt() {
+    this._updatedAt = new Date();
   }
 
-  protected setDeletedAt(deletedAt: Date) {
-    this._deletedAt = deletedAt;
-    this.setUpdatedAt(new Date());
+  protected setDeletedAt() {
+    this._deletedAt = new Date();
+    this.setUpdatedAt();
   }
 }
 

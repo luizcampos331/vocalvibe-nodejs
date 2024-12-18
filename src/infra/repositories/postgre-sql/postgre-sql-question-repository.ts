@@ -1,5 +1,8 @@
 import { IDatabaseConfig } from '@/application/database/i-database-config';
-import { IQuestionRepository } from '@/application/repositories/i-question-repository';
+import {
+  FindQuestionByIdInput,
+  IQuestionRepository,
+} from '@/application/repositories/i-question-repository';
 import Question from '@/domain/entities/question';
 
 class PostgreSqlQuestionRepository implements IQuestionRepository {
@@ -19,9 +22,30 @@ class PostgreSqlQuestionRepository implements IQuestionRepository {
       [],
     );
 
-    console.log(questions);
-
     return questions.map((question: any) => Question.create(question));
+  }
+
+  public async findById({
+    id,
+  }: FindQuestionByIdInput): Promise<Question | null> {
+    const [question] = await this.databaseConfig.query(
+      `SELECT
+        id,
+        context,
+        native_language AS "nativeLanguage",
+        goal_language AS "goalLanguage",
+        filename,
+        created_at,
+        updated_at
+      FROM
+        questions
+      WHERE
+        id = $1
+        AND deleted_at IS NULL;`,
+      [id],
+    );
+
+    return question ? Question.create(question) : null;
   }
 
   public async create(data: Question): Promise<void> {
