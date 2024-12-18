@@ -9,11 +9,14 @@ class SocketIoWebsocketGateway implements IWebsocketGateway {
   private socketServer!: SocketServer;
 
   public start(server: Server) {
-    this.socketServer = new SocketServer(server);
+    this.socketServer = new SocketServer(server, {
+      cors: {
+        origin: '*',
+      },
+    });
 
     this.socketServer.on('connection', socketProps => {
       socketProps.on('connectUser', data => {
-        console.log('data', data);
         socketProps.join(data.room);
       });
 

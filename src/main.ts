@@ -23,11 +23,14 @@ export let env: EnvProps;
   new PipelineConversationController(httpServer, mediator);
   new QuestionController(httpServer);
 
-  const server = createServer(httpServer.getClient());
-  websocketGateway.start(server);
+  httpServer.start(env.HTTP_PORT, () => {
+    console.log(`HTTP server is running on port - ${env.HTTP_PORT}`);
+  });
 
-  server.listen(env.HTTP_PORT, () => {
-    console.log(`Server is running on port - ${env.HTTP_PORT}`);
+  const websocektServer = createServer();
+  websocketGateway.start(websocektServer);
+  websocektServer.listen(env.WEBSOCKET_PORT, () => {
+    console.log(`WebSocket server is running on port - ${env.WEBSOCKET_PORT}`);
   });
 })();
 

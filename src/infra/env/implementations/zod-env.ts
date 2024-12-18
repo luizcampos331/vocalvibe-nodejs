@@ -35,6 +35,7 @@ class ZodEnv {
       SEND_QUESTION_TO_USER_EVENT: z.string(),
 
       // Websocket
+      WEBSOCKET_PORT: z.coerce.number().default(3334),
       WEBSOCKET_IMPLEMENTATION: z.enum(['socketIo']),
       CONVERSATION_ROOM: z.string(),
     });

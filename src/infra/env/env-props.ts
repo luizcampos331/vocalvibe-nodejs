@@ -28,6 +28,7 @@ export type EnvProps = {
   SEND_QUESTION_TO_USER_EVENT: string;
 
   // Websocket
+  WEBSOCKET_PORT: number;
   WEBSOCKET_IMPLEMENTATION: 'socketIo';
   CONVERSATION_ROOM: string;
 };
