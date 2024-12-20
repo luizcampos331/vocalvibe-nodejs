@@ -34,7 +34,6 @@ class CreateQuestionFromAudioUseCase {
 
       const file = new FileTmp('question.mp3');
       await file.saveTmp(audio);
-
       const { filename, fileSize, contentType } = await file.getInfos();
 
       await this.storageGateway.save({

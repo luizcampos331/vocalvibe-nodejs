@@ -17,21 +17,21 @@ class FileTmp {
   }
 
   public async saveTmp(file: Buffer): Promise<void> {
-    await fs.promises.writeFile(this.getFile(), file);
+    await fs.promises.writeFile(this.getFilePath(), file);
   }
 
   public async getSize(): Promise<number> {
-    return (await fs.promises.stat(this.getFilePath())).size;
+    return (await fs.promises.stat(this.getFilePathTmp())).size;
   }
 
   public getContentType(): string {
-    return mime.lookup(this.getFilePath()) || '';
+    return mime.lookup(this.getFilePathTmp()) || '';
   }
-  public getFilePath(): string {
+  public getFilePathTmp(): string {
     return path.resolve(__dirname, `../../../tmp`);
   }
 
-  public getFile(): string {
+  public getFilePath(): string {
     return path.resolve(__dirname, `../../../tmp/${this.filename}`);
   }
 

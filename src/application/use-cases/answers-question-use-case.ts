@@ -2,6 +2,7 @@ import { ExceptionError } from '@/shared/errors/exception-error';
 import { HandleError } from '@/shared/errors/handle-error';
 import PipelineConversationAnswer from '@/domain/entities/pipeline-conversation-answer';
 import { env } from '@/main';
+import FileTmp from '@/domain/value-object/file-tmp';
 import { ApplicationError } from '../errors/application-error';
 import { IStorageGateway } from '../gateways/i-storage-gateway';
 import { IMediator } from '../gateways/i-mediator';
@@ -9,6 +10,7 @@ import { IPipelineConversationQuestionRepository } from '../repositories/i-pipel
 import { IDatabaseConfig } from '../database/i-database-config';
 import { IPipelineConversationAnswerRepository } from '../repositories/i-pipeline-conversation-answer-respository';
 import { SendQuestionToUserInput } from './send-question-to-user-use-case';
+import { ILlmGateway } from '../gateways/i-llm-gateway';
 
 export type AnswersQuestionInput = {
   pipelineConversationQuestionId: string;
@@ -21,6 +23,7 @@ class AnswersQuestionUseCase {
     private readonly pipelineConversationQuestionRepository: IPipelineConversationQuestionRepository,
     private readonly pipelineConversationAnswerRepository: IPipelineConversationAnswerRepository,
     private readonly storageGateway: IStorageGateway,
+    private readonly llmGateway: ILlmGateway,
     private readonly mediator: IMediator,
     private readonly databaseConfig: IDatabaseConfig,
   ) {}
@@ -41,10 +44,20 @@ class AnswersQuestionUseCase {
         throw new ApplicationError('Pipeline conversation question not found');
       }
 
+      const file = new FileTmp(filename);
+      await file.saveTmp(fileBufer);
+      const { contentType, fileSize } = await file.getInfos();
+
+      const { text, duration } = await this.llmGateway.transcribeAudio({
+        filePath: file.getFilePath(),
+      });
+
       await this.pipelineConversationAnswerRepository.create(
         PipelineConversationAnswer.create({
           pipelineConversationQuestionId,
           filename,
+          text,
+          duration,
         }),
       );
 
@@ -57,8 +70,8 @@ class AnswersQuestionUseCase {
         filename,
         folder: 'answer-audio',
         content: fileBufer,
-        contentType: '',
-        fileSize: 0,
+        contentType,
+        fileSize,
       });
       await this.databaseConfig.commit();
 

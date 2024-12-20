@@ -19,7 +19,7 @@ class DiskStorageGateway implements IStorageGateway {
     filename,
     folder,
   }: SaveStorageInput): Promise<void> {
-    const filePathTmp = new FileTmp(filename).getFilePath();
+    const filePathTmp = new FileTmp(filename).getFilePathTmp();
     await fs.promises.appendFile(
       `${filePathTmp}/${folder}/${filename}`,
       content,

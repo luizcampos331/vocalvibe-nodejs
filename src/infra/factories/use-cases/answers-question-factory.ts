@@ -4,6 +4,7 @@ import DatabaseFactory from '../database/database-factory';
 import PipelineConversationQuestionRepositoryFactory from '../repositories/pipeline-conversation-question-repository-factory';
 import StorageGatewayFactory from '../gateways/storage-gateway-factory';
 import PipelineConversationAnswerRepositoryFactory from '../repositories/pipeline-conversation-question-answer-factory';
+import LlmGatewayFactory from '../gateways/llm-gateway-factory';
 
 class AnswersQuestionFactory {
   public make() {
@@ -12,6 +13,7 @@ class AnswersQuestionFactory {
       new PipelineConversationQuestionRepositoryFactory().make(databaseConfig),
       new PipelineConversationAnswerRepositoryFactory().make(databaseConfig),
       new StorageGatewayFactory().make(),
+      new LlmGatewayFactory().make(),
       Mediator.getInstance(),
       databaseConfig,
     );
