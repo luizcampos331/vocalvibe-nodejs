@@ -26,6 +26,7 @@ export type EnvProps = {
 
   // Events
   SEND_QUESTION_TO_USER_EVENT: string;
+  ANSWER_QUESTION_EVENT: string;
 
   // Websocket
   WEBSOCKET_PORT: number;

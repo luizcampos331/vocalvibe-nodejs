@@ -20,17 +20,17 @@ export let env: EnvProps;
   const websocketGateway = new WebsocketGatewayFactory().make();
   const mediator = Mediator.getInstance();
 
-  new PipelineConversationController(httpServer, mediator);
-  new QuestionController(httpServer);
-
-  httpServer.start(env.HTTP_PORT, () => {
-    console.log(`HTTP server is running on port - ${env.HTTP_PORT}`);
-  });
-
   const websocektServer = createServer();
   websocketGateway.start(websocektServer);
   websocektServer.listen(env.WEBSOCKET_PORT, () => {
     console.log(`WebSocket server is running on port - ${env.WEBSOCKET_PORT}`);
+  });
+
+  new PipelineConversationController(httpServer, mediator, websocketGateway);
+  new QuestionController(httpServer);
+
+  httpServer.start(env.HTTP_PORT, () => {
+    console.log(`HTTP server is running on port - ${env.HTTP_PORT}`);
   });
 })();
 

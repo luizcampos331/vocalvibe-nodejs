@@ -12,7 +12,7 @@ export type PipelineConversationQuestionJSON =
 class PipelineConversationQuestion extends Entity {
   private readonly _pipelineConversationId: string;
   private readonly _questionId: string;
-  private readonly _answered: boolean;
+  private _answered: boolean;
 
   constructor(props: PipelineConversationQuestionProps) {
     super(props);
@@ -41,6 +41,11 @@ class PipelineConversationQuestion extends Entity {
       updatedAt: this._updatedAt,
       deletedAt: this._deletedAt,
     };
+  }
+
+  public answer() {
+    this._answered = true;
+    this.setUpdatedAt();
   }
 }
 

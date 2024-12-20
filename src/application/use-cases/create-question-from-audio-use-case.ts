@@ -2,7 +2,6 @@ import Question from '@/domain/entities/question';
 import FileTmp from '@/domain/value-object/file-tmp';
 import { ExceptionError } from '@/shared/errors/exception-error';
 import { HandleError } from '@/shared/errors/handle-error';
-import FileFolder from '@/shared/enum/file-folder';
 import { IQuestionRepository } from '../repositories/i-question-repository';
 import { IStorageGateway } from '../gateways/i-storage-gateway';
 import { ILlmGateway } from '../gateways/i-llm-gateway';
@@ -29,7 +28,6 @@ class CreateQuestionFromAudioUseCase {
   }: CreateQuestionFromAudioUseCaseInput): Promise<void> {
     try {
       await this.databaseConfig.startTransaction();
-
       const { audio } = await this.llmGateway.generateAudio({
         content: goalLanguage,
       });
@@ -44,7 +42,7 @@ class CreateQuestionFromAudioUseCase {
         fileSize,
         content: audio,
         contentType,
-        folder: FileFolder.questionAudio,
+        folder: 'question-audio',
       });
 
       const question = Question.create({

@@ -1,12 +1,14 @@
 import {
   EmitWebsocketInput,
   IWebsocketGateway,
+  ListenWebsocketInput,
 } from '@/application/gateways/i-websocket-gateway';
 import { Server } from 'node:http';
-import { Server as SocketServer } from 'socket.io';
+import { Server as SocketServer, Socket } from 'socket.io';
 
 class SocketIoWebsocketGateway implements IWebsocketGateway {
   private socketServer!: SocketServer;
+  private socketProps!: Socket;
 
   public start(server: Server) {
     this.socketServer = new SocketServer(server, {
@@ -16,13 +18,15 @@ class SocketIoWebsocketGateway implements IWebsocketGateway {
     });
 
     this.socketServer.on('connection', socketProps => {
-      socketProps.on('connectUser', data => {
+      socketProps.on('connect-user', data => {
         socketProps.join(data.room);
       });
 
-      socketProps.on('disconnectUser', data => {
+      socketProps.on('disconnect-user', data => {
         socketProps.leave(data.room);
       });
+
+      this.socketProps = socketProps;
     });
 
     return this.socketServer;
@@ -30,6 +34,21 @@ class SocketIoWebsocketGateway implements IWebsocketGateway {
 
   public async emit({ room, event, data }: EmitWebsocketInput): Promise<void> {
     this.socketServer.to(room).emit(event, data);
+  }
+
+  public async listen({
+    room,
+    event,
+    callback,
+  }: ListenWebsocketInput): Promise<void> {
+    this.socketServer.on('connection', socketProps => {
+      this.socketProps.on(event, data => {
+        if (!socketProps.rooms.has(room)) {
+          return;
+        }
+        callback(data);
+      });
+    });
   }
 }
 

@@ -30,7 +30,6 @@ class CreatePipelineConversationUseCase {
   public async execute(): Promise<CreatePipelineConversationOutput> {
     try {
       await this.databaseConfig.startTransaction();
-
       const questions = await this.questionRepository.findAll();
 
       const { response, inputToken, outputToken } =

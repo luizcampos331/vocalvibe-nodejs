@@ -25,7 +25,6 @@ class StartPipelineConversationUseCase {
   }: StartPipelineConversationUseCaseInput): Promise<void> {
     try {
       await this.databaseConfig.startTransaction();
-
       const pipelineConversation =
         await this.pipelineConversationRepository.findById({
           id,

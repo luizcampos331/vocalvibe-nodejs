@@ -1,0 +1,21 @@
+import AnswersQuestionUseCase from '@/application/use-cases/answers-question-use-case';
+import Mediator from '@/infra/gateways/meditor/mediator';
+import DatabaseFactory from '../database/database-factory';
+import PipelineConversationQuestionRepositoryFactory from '../repositories/pipeline-conversation-question-repository-factory';
+import StorageGatewayFactory from '../gateways/storage-gateway-factory';
+import PipelineConversationAnswerRepositoryFactory from '../repositories/pipeline-conversation-question-answer-factory';
+
+class AnswersQuestionFactory {
+  public make() {
+    const databaseConfig = new DatabaseFactory().make();
+    return new AnswersQuestionUseCase(
+      new PipelineConversationQuestionRepositoryFactory().make(databaseConfig),
+      new PipelineConversationAnswerRepositoryFactory().make(databaseConfig),
+      new StorageGatewayFactory().make(),
+      Mediator.getInstance(),
+      databaseConfig,
+    );
+  }
+}
+
+export default AnswersQuestionFactory;

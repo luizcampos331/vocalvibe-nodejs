@@ -5,6 +5,7 @@ export interface IPipelineConversationQuestionRepository {
     data: FindPipelineConvertionQuestionByIdInput,
   ): Promise<PipelineConversationQuestion | null>;
   create(data: PipelineConversationQuestion): Promise<void>;
+  update(data: PipelineConversationQuestion): Promise<void>;
 }
 
 export type FindPipelineConvertionQuestionByIdInput = {

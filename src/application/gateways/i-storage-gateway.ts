@@ -3,7 +3,7 @@ export interface IStorageGateway {
   save(data: SaveStorageInput): Promise<void>;
 }
 
-type Folder = 'question-audio';
+type Folder = 'question-audio' | 'answer-audio';
 
 export type GetStorageInput = {
   filename: string;

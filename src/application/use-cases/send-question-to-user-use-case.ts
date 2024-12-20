@@ -1,7 +1,6 @@
 import { ExceptionError } from '@/shared/errors/exception-error';
 import { HandleError } from '@/shared/errors/handle-error';
 import { env } from '@/main';
-import FileFolder from '@/shared/enum/file-folder';
 import { IPipelineConversationQuestionRepository } from '../repositories/i-pipeline-conversation-question-respository';
 import { IQuestionRepository } from '../repositories/i-question-repository';
 import { ApplicationError } from '../errors/application-error';
@@ -43,7 +42,7 @@ class SendQuestionToUserUseCase {
 
       const audio = await this.storageGateway.get({
         filename: questionRepository.filename,
-        folder: FileFolder.questionAudio,
+        folder: 'question-audio',
       });
 
       await this.websocketGateway.emit({

@@ -50,6 +50,27 @@ class PostgreSqlPipelineConversationQuestionRepository
       ],
     );
   }
+
+  public async update(data: PipelineConversationQuestion): Promise<void> {
+    const dataJson = data.toJSON();
+    await this.databaseConfig.query(
+      `UPDATE pipeline_conversation_questions
+         SET pipeline_conversation_id = $1,
+             question_id = $2,
+             answered = $3,
+             created_at = $4,
+             updated_at = $5
+         WHERE id = $6 AND deleted_at IS NULL`,
+      [
+        dataJson.pipelineConversationId,
+        dataJson.questionId,
+        dataJson.answered,
+        dataJson.createdAt,
+        dataJson.updatedAt,
+        dataJson.id,
+      ],
+    );
+  }
 }
 
 export default PostgreSqlPipelineConversationQuestionRepository;
