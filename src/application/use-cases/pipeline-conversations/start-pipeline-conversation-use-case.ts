@@ -1,11 +1,11 @@
 import { ExceptionError } from '@/shared/errors/exception-error';
 import { HandleError } from '@/shared/errors/handle-error';
 import { env } from '@/main';
-import { IPipelineConversationRepository } from '../repositories/i-pipeline-conversation-respository';
-import { ApplicationError } from '../errors/application-error';
-import { IPipelineConversationQuestionQuery } from '../queries/i-pipeline-conversation-question-query';
-import { IMediator } from '../gateways/i-mediator';
-import { IDatabaseConfig } from '../database/i-database-config';
+import { IPipelineConversationRepository } from '../../repositories/i-pipeline-conversation-respository';
+import { ApplicationError } from '../../errors/application-error';
+import { IPipelineConversationQuestionQuery } from '../../queries/i-pipeline-conversation-question-query';
+import { IMediator } from '../../gateways/i-mediator';
+import { IDatabaseConfig } from '../../database/i-database-config';
 import { SendQuestionToUserInput } from './send-question-to-user-use-case';
 
 export type StartPipelineConversationUseCaseInput = {

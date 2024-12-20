@@ -1,11 +1,11 @@
 import { ExceptionError } from '@/shared/errors/exception-error';
 import { HandleError } from '@/shared/errors/handle-error';
 import { env } from '@/main';
-import { IPipelineConversationQuestionRepository } from '../repositories/i-pipeline-conversation-question-respository';
-import { IQuestionRepository } from '../repositories/i-question-repository';
-import { ApplicationError } from '../errors/application-error';
-import { IStorageGateway } from '../gateways/i-storage-gateway';
-import { IWebsocketGateway } from '../gateways/i-websocket-gateway';
+import { IPipelineConversationQuestionRepository } from '../../repositories/i-pipeline-conversation-question-respository';
+import { IQuestionRepository } from '../../repositories/i-question-repository';
+import { ApplicationError } from '../../errors/application-error';
+import { IStorageGateway } from '../../gateways/i-storage-gateway';
+import { IWebsocketGateway } from '../../gateways/i-websocket-gateway';
 
 export type SendQuestionToUserInput = {
   pipelineConversationQuestionId: string;

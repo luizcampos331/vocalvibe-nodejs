@@ -1,5 +1,5 @@
 import StatusCode from '@/infra/http/enums/status-code';
-import CreateQuestionFromAudioFactory from '../factories/use-cases/create-question-from-audio-factory';
+import CreateQuestionFromAudioFactory from '../factories/use-cases/questions/create-question-from-audio-factory';
 import { IHttpServer } from '../http/i-http-server';
 
 class QuestionController {

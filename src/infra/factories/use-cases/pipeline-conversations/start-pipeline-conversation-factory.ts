@@ -1,8 +1,8 @@
-import StartPipelineConversationUseCase from '@/application/use-cases/start-pipeline-conversation-use-case';
+import StartPipelineConversationUseCase from '@/application/use-cases/pipeline-conversations/start-pipeline-conversation-use-case';
 import Mediator from '@/infra/gateways/meditor/mediator';
-import DatabaseFactory from '../database/database-factory';
-import PipelineConversationRepositoryFactory from '../repositories/pipeline-conversation-repository-factory';
-import PipelineConversationQuestionQueryFactory from '../queries/pipeline-conversation-question-query-factory';
+import DatabaseFactory from '../../database/database-factory';
+import PipelineConversationRepositoryFactory from '../../repositories/pipeline-conversation-repository-factory';
+import PipelineConversationQuestionQueryFactory from '../../queries/pipeline-conversation-question-query-factory';
 
 class StartPipelineConversationFactory {
   public make() {

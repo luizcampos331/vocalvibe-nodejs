@@ -5,13 +5,13 @@ import PipelineConversation, {
   PipelineConversationStatus,
 } from '@/domain/entities/pipeline-conversation';
 import PipelineConversationQuestion from '@/domain/entities/pipeline-conversation-question';
-import { IDatabaseConfig } from '../database/i-database-config';
-import { ILlmGateway } from '../gateways/i-llm-gateway';
-import { ILlmTokensRepository } from '../repositories/i-llm-tokens-repository';
-import { IQuestionRepository } from '../repositories/i-question-repository';
-import { IPipelineConversationRepository } from '../repositories/i-pipeline-conversation-respository';
-import { IPipelineConversationQuestionRepository } from '../repositories/i-pipeline-conversation-question-respository';
-import { ApplicationError } from '../errors/application-error';
+import { IDatabaseConfig } from '../../database/i-database-config';
+import { ILlmGateway } from '../../gateways/i-llm-gateway';
+import { ILlmTokensRepository } from '../../repositories/i-llm-tokens-repository';
+import { IQuestionRepository } from '../../repositories/i-question-repository';
+import { IPipelineConversationRepository } from '../../repositories/i-pipeline-conversation-respository';
+import { IPipelineConversationQuestionRepository } from '../../repositories/i-pipeline-conversation-question-respository';
+import { ApplicationError } from '../../errors/application-error';
 
 export type CreatePipelineConversationOutput = {
   id: string;

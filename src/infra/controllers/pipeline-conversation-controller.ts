@@ -1,14 +1,14 @@
 import StatusCode from '@/infra/http/enums/status-code';
 import { IMediator } from '@/application/gateways/i-mediator';
 import { env } from '@/main';
-import { SendQuestionToUserInput } from '@/application/use-cases/send-question-to-user-use-case';
+import { SendQuestionToUserInput } from '@/application/use-cases/pipeline-conversations/send-question-to-user-use-case';
 import { IWebsocketGateway } from '@/application/gateways/i-websocket-gateway';
-import { AnswersQuestionInput } from '@/application/use-cases/answers-question-use-case';
+import { AnswersQuestionInput } from '@/application/use-cases/pipeline-conversations/answers-question-use-case';
 import { IHttpServer } from '../http/i-http-server';
-import CreatePipelineConversationFactory from '../factories/use-cases/create-pipeline-conversation-factory';
-import StartPipelineConversationFactory from '../factories/use-cases/start-pipeline-conversation-factory';
-import SendQuestionToUserFactory from '../factories/use-cases/send-question-to-user-factory';
-import AnswersQuestionFactory from '../factories/use-cases/answers-question-factory';
+import CreatePipelineConversationFactory from '../factories/use-cases/pipeline-conversations/create-pipeline-conversation-factory';
+import StartPipelineConversationFactory from '../factories/use-cases/pipeline-conversations/start-pipeline-conversation-factory';
+import SendQuestionToUserFactory from '../factories/use-cases/pipeline-conversations/send-question-to-user-factory';
+import AnswersQuestionFactory from '../factories/use-cases/pipeline-conversations/answers-question-factory';
 
 class PipelineConversationController {
   private urlBase = '/pipeline-conversations';

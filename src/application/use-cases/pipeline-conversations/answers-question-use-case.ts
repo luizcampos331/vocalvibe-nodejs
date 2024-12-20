@@ -3,14 +3,14 @@ import { HandleError } from '@/shared/errors/handle-error';
 import PipelineConversationAnswer from '@/domain/entities/pipeline-conversation-answer';
 import { env } from '@/main';
 import FileTmp from '@/domain/value-object/file-tmp';
-import { ApplicationError } from '../errors/application-error';
-import { IStorageGateway } from '../gateways/i-storage-gateway';
-import { IMediator } from '../gateways/i-mediator';
-import { IPipelineConversationQuestionRepository } from '../repositories/i-pipeline-conversation-question-respository';
-import { IDatabaseConfig } from '../database/i-database-config';
-import { IPipelineConversationAnswerRepository } from '../repositories/i-pipeline-conversation-answer-respository';
+import { ApplicationError } from '../../errors/application-error';
+import { IStorageGateway } from '../../gateways/i-storage-gateway';
+import { IMediator } from '../../gateways/i-mediator';
+import { IPipelineConversationQuestionRepository } from '../../repositories/i-pipeline-conversation-question-respository';
+import { IDatabaseConfig } from '../../database/i-database-config';
+import { IPipelineConversationAnswerRepository } from '../../repositories/i-pipeline-conversation-answer-respository';
+import { ILlmGateway } from '../../gateways/i-llm-gateway';
 import { SendQuestionToUserInput } from './send-question-to-user-use-case';
-import { ILlmGateway } from '../gateways/i-llm-gateway';
 
 export type AnswersQuestionInput = {
   pipelineConversationQuestionId: string;
