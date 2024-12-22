@@ -1,4 +1,4 @@
-import CreateQuestionFromAudioUseCase from '@/application/use-cases/create-question-from-audio-use-case';
+import CreateQuestionFromAudioUseCase from '@/application/use-cases/questions/create-question-from-audio-use-case';
 import DatabaseFactory from '../../database/database-factory';
 import QuestionRepositoryFactory from '../../repositories/question-repository-factory';
 import StorageGatewayFactory from '../../gateways/storage-gateway-factory';

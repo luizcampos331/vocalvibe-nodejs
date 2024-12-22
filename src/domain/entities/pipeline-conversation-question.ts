@@ -21,6 +21,10 @@ class PipelineConversationQuestion extends Entity {
     this._answered = props?.answered || false;
   }
 
+  public get pipelineConversationId() {
+    return this._pipelineConversationId;
+  }
+
   public get questionId() {
     return this._questionId;
   }

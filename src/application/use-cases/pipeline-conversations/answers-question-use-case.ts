@@ -3,6 +3,7 @@ import { HandleError } from '@/shared/errors/handle-error';
 import PipelineConversationAnswer from '@/domain/entities/pipeline-conversation-answer';
 import { env } from '@/main';
 import FileTmp from '@/domain/value-object/file-tmp';
+import { IPipelineConversationQuestionQuery } from '@/application/queries/i-pipeline-conversation-question-query';
 import { ApplicationError } from '../../errors/application-error';
 import { IStorageGateway } from '../../gateways/i-storage-gateway';
 import { IMediator } from '../../gateways/i-mediator';
@@ -11,6 +12,7 @@ import { IDatabaseConfig } from '../../database/i-database-config';
 import { IPipelineConversationAnswerRepository } from '../../repositories/i-pipeline-conversation-answer-respository';
 import { ILlmGateway } from '../../gateways/i-llm-gateway';
 import { SendQuestionToUserInput } from './send-question-to-user-use-case';
+import { FinishPipelineConversationInput } from './finish-pipeline-conversation-use-case';
 
 export type AnswersQuestionInput = {
   pipelineConversationQuestionId: string;
@@ -22,6 +24,7 @@ class AnswersQuestionUseCase {
   constructor(
     private readonly pipelineConversationQuestionRepository: IPipelineConversationQuestionRepository,
     private readonly pipelineConversationAnswerRepository: IPipelineConversationAnswerRepository,
+    private readonly pipelineConversationQuestionQuery: IPipelineConversationQuestionQuery,
     private readonly storageGateway: IStorageGateway,
     private readonly llmGateway: ILlmGateway,
     private readonly mediator: IMediator,
@@ -74,6 +77,26 @@ class AnswersQuestionUseCase {
         fileSize,
       });
       await this.databaseConfig.commit();
+
+      const nextPipelineConversationQuestion =
+        await this.pipelineConversationQuestionQuery.getNextQuestionIdByPipelineConversation(
+          {
+            pipelineConversationId:
+              pipelineConversationQuestion.pipelineConversationId,
+          },
+        );
+
+      if (!nextPipelineConversationQuestion) {
+        this.mediator.notify<FinishPipelineConversationInput>({
+          event: env.FINISH_PIPELINE_CONVERSATION_EVENT,
+          data: {
+            pipelineConversationId:
+              pipelineConversationQuestion.pipelineConversationId,
+          },
+        });
+
+        return;
+      }
 
       this.mediator.notify<SendQuestionToUserInput>({
         event: env.SEND_QUESTION_TO_USER_EVENT,

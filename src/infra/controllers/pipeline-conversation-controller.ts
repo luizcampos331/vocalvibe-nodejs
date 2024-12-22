@@ -4,11 +4,13 @@ import { env } from '@/main';
 import { SendQuestionToUserInput } from '@/application/use-cases/pipeline-conversations/send-question-to-user-use-case';
 import { IWebsocketGateway } from '@/application/gateways/i-websocket-gateway';
 import { AnswersQuestionInput } from '@/application/use-cases/pipeline-conversations/answers-question-use-case';
+import { FinishPipelineConversationInput } from '@/application/use-cases/pipeline-conversations/finish-pipeline-conversation-use-case';
 import { IHttpServer } from '../http/i-http-server';
 import CreatePipelineConversationFactory from '../factories/use-cases/pipeline-conversations/create-pipeline-conversation-factory';
 import StartPipelineConversationFactory from '../factories/use-cases/pipeline-conversations/start-pipeline-conversation-factory';
 import SendQuestionToUserFactory from '../factories/use-cases/pipeline-conversations/send-question-to-user-factory';
 import AnswersQuestionFactory from '../factories/use-cases/pipeline-conversations/answers-question-factory';
+import FinishPipelineConversationFactory from '../factories/use-cases/pipeline-conversations/finish-pipeline-conversation-factory';
 
 class PipelineConversationController {
   private urlBase = '/pipeline-conversations';
@@ -22,6 +24,7 @@ class PipelineConversationController {
     this.start(httpServer);
     this.sentQuestionToUser(mediator);
     this.answerQuestion(websocketGateway);
+    this.finish(mediator);
   }
 
   private create(httpServer: IHttpServer) {
@@ -65,9 +68,9 @@ class PipelineConversationController {
     mediator.consume({
       event: env.SEND_QUESTION_TO_USER_EVENT,
       callback: async (data: SendQuestionToUserInput) => {
-        const sendQuestionToUserFactory =
+        const sendQuestionToUserUseCase =
           new SendQuestionToUserFactory().make();
-        await sendQuestionToUserFactory.execute(data);
+        await sendQuestionToUserUseCase.execute(data);
       },
     });
   }
@@ -77,8 +80,19 @@ class PipelineConversationController {
       event: env.ANSWER_QUESTION_EVENT,
       room: env.CONVERSATION_ROOM,
       callback: async (data: AnswersQuestionInput) => {
-        const answersQuestionService = new AnswersQuestionFactory().make();
-        await answersQuestionService.execute(data);
+        const answersQuestionUseCase = new AnswersQuestionFactory().make();
+        await answersQuestionUseCase.execute(data);
+      },
+    });
+  }
+
+  private finish(mediator: IMediator) {
+    mediator.consume({
+      event: env.FINISH_PIPELINE_CONVERSATION_EVENT,
+      callback: async (data: FinishPipelineConversationInput) => {
+        const finishPipelineConversationUseCase =
+          new FinishPipelineConversationFactory().make();
+        await finishPipelineConversationUseCase.execute(data);
       },
     });
   }

@@ -34,6 +34,7 @@ class ZodEnv {
       // Events
       SEND_QUESTION_TO_USER_EVENT: z.string(),
       ANSWER_QUESTION_EVENT: z.string(),
+      FINISH_PIPELINE_CONVERSATION_EVENT: z.string(),
 
       // Websocket
       WEBSOCKET_PORT: z.coerce.number().default(3334),

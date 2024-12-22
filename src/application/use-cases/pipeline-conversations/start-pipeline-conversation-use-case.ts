@@ -38,9 +38,11 @@ class StartPipelineConversationUseCase {
       await this.pipelineConversationRepository.update(pipelineConversation);
 
       const pipelineConversationQuestionId =
-        await this.pipelineConversationQuestionQuery.getNextQuestionId({
-          pipelineConversationId: id,
-        });
+        await this.pipelineConversationQuestionQuery.getNextQuestionIdByPipelineConversation(
+          {
+            pipelineConversationId: id,
+          },
+        );
 
       if (!pipelineConversationQuestionId) {
         throw new ApplicationError(

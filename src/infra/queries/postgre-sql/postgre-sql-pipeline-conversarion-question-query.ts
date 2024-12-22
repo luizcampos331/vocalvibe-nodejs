@@ -1,6 +1,6 @@
 import { IDatabaseConfig } from '@/application/database/i-database-config';
 import {
-  GetNextQuestionIdInput,
+  GetNextQuestionIdNyPipelineConversationInput,
   IPipelineConversationQuestionQuery,
 } from '@/application/queries/i-pipeline-conversation-question-query';
 
@@ -9,9 +9,9 @@ class PostgreSqlPipelineConversationQuestionQuery
 {
   constructor(private readonly databaseConfig: IDatabaseConfig) {}
 
-  public async getNextQuestionId({
+  public async getNextQuestionIdByPipelineConversation({
     pipelineConversationId,
-  }: GetNextQuestionIdInput): Promise<string | null> {
+  }: GetNextQuestionIdNyPipelineConversationInput): Promise<string | null> {
     const [pipelineConversationQuestion] = await this.databaseConfig.query(
       `SELECT
         id

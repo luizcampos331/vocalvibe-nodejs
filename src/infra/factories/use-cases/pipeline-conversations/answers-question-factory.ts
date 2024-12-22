@@ -5,6 +5,7 @@ import PipelineConversationQuestionRepositoryFactory from '../../repositories/pi
 import StorageGatewayFactory from '../../gateways/storage-gateway-factory';
 import PipelineConversationAnswerRepositoryFactory from '../../repositories/pipeline-conversation-question-answer-factory';
 import LlmGatewayFactory from '../../gateways/llm-gateway-factory';
+import PipelineConversationQuestionQueryFactory from '../../queries/pipeline-conversation-question-query-factory';
 
 class AnswersQuestionFactory {
   public make() {
@@ -12,6 +13,7 @@ class AnswersQuestionFactory {
     return new AnswersQuestionUseCase(
       new PipelineConversationQuestionRepositoryFactory().make(databaseConfig),
       new PipelineConversationAnswerRepositoryFactory().make(databaseConfig),
+      new PipelineConversationQuestionQueryFactory().make(databaseConfig),
       new StorageGatewayFactory().make(),
       new LlmGatewayFactory().make(),
       Mediator.getInstance(),

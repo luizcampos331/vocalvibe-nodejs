@@ -39,10 +39,20 @@ class PipelineConversation extends Entity {
   public start() {
     if (this._status !== PipelineConversationStatus.create) {
       throw new DomainError(
-        'Invalid status for pipeline conversation to be initiated',
+        'Invalid status for pipeline conversation to be started',
       );
     }
     this._status = PipelineConversationStatus.inProgress;
+    this.setUpdatedAt();
+  }
+
+  public finish() {
+    if (this._status !== PipelineConversationStatus.inProgress) {
+      throw new DomainError(
+        'Invalid status for pipeline conversation to be finished',
+      );
+    }
+    this._status = PipelineConversationStatus.finished;
     this.setUpdatedAt();
   }
 }

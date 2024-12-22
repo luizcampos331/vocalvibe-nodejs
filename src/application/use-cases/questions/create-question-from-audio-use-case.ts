@@ -1,11 +1,11 @@
+import { IDatabaseConfig } from '@/application/database/i-database-config';
+import { ILlmGateway } from '@/application/gateways/i-llm-gateway';
+import { IStorageGateway } from '@/application/gateways/i-storage-gateway';
+import { IQuestionRepository } from '@/application/repositories/i-question-repository';
 import Question from '@/domain/entities/question';
 import FileTmp from '@/domain/value-object/file-tmp';
 import { ExceptionError } from '@/shared/errors/exception-error';
 import { HandleError } from '@/shared/errors/handle-error';
-import { IQuestionRepository } from '../repositories/i-question-repository';
-import { IStorageGateway } from '../gateways/i-storage-gateway';
-import { ILlmGateway } from '../gateways/i-llm-gateway';
-import { IDatabaseConfig } from '../database/i-database-config';
 
 export type CreateQuestionFromAudioUseCaseInput = {
   context: string;

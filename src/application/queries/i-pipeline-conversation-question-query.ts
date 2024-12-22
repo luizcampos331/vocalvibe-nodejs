@@ -1,7 +1,9 @@
 export interface IPipelineConversationQuestionQuery {
-  getNextQuestionId(data: GetNextQuestionIdInput): Promise<string | null>;
+  getNextQuestionIdByPipelineConversation(
+    data: GetNextQuestionIdNyPipelineConversationInput,
+  ): Promise<string | null>;
 }
 
-export type GetNextQuestionIdInput = {
+export type GetNextQuestionIdNyPipelineConversationInput = {
   pipelineConversationId: string;
 };
