@@ -45,12 +45,11 @@ class SendQuestionToUserUseCase {
         folder: 'question-audio',
       });
 
+      console.log('env.CONVERSATION_ROOM', env.CONVERSATION_ROOM);
       await this.websocketGateway.emit({
         room: env.CONVERSATION_ROOM,
         event: env.SEND_QUESTION_TO_USER_EVENT,
         data: {
-          pipelineConversationId:
-            pipelineConversationQuestion.pipelineConversationId,
           pipelineConversationQuestionId,
           question: {
             nativeLanguage: questionRepository.nativeLanguage,

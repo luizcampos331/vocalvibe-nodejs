@@ -80,6 +80,8 @@ class PipelineConversationController {
       event: env.ANSWER_QUESTION_EVENT,
       room: env.CONVERSATION_ROOM,
       callback: async (data: AnswersQuestionInput) => {
+        console.log('data', data);
+
         const answersQuestionUseCase = new AnswersQuestionFactory().make();
         await answersQuestionUseCase.execute(data);
       },

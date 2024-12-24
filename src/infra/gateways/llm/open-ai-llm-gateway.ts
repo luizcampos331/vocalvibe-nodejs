@@ -60,6 +60,7 @@ class OpenAiLlmGateway implements ILlmGateway {
       file: fs.createReadStream(filePath),
       model: 'whisper-1',
       response_format: 'verbose_json',
+      language: 'en',
       timestamp_granularities: ['segment'],
     });
 

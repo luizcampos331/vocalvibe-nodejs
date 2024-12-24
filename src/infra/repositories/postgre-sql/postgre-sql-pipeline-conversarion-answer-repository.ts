@@ -10,7 +10,7 @@ class PostgreSqlPipelineConversationAnswerRepository
   public async create(data: PipelineConversationAnswer): Promise<void> {
     const dataJson = data.toJSON();
     await this.databaseConfig.query(
-      'INSERT INTO pipeline_conversation_questions (id, pipeline_conversation_question_id, text, filename, duration, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+      'INSERT INTO pipeline_conversation_answers (id, pipeline_conversation_question_id, text, filename, duration, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7)',
       [
         dataJson.id,
         dataJson.pipelineConversationQuestionId,

@@ -17,7 +17,7 @@ import { FinishPipelineConversationInput } from './finish-pipeline-conversation-
 export type AnswersQuestionInput = {
   pipelineConversationQuestionId: string;
   filename: string;
-  fileBufer: Buffer;
+  fileBuffer: Buffer;
 };
 
 class AnswersQuestionUseCase {
@@ -34,7 +34,7 @@ class AnswersQuestionUseCase {
   public async execute({
     pipelineConversationQuestionId,
     filename,
-    fileBufer,
+    fileBuffer,
   }: AnswersQuestionInput) {
     try {
       await this.databaseConfig.startTransaction();
@@ -48,7 +48,7 @@ class AnswersQuestionUseCase {
       }
 
       const file = new FileTmp(filename);
-      await file.saveTmp(fileBufer);
+      await file.saveTmp(fileBuffer);
       const { contentType, fileSize } = await file.getInfos();
 
       const { text, duration } = await this.llmGateway.transcribeAudio({
@@ -58,7 +58,7 @@ class AnswersQuestionUseCase {
       await this.pipelineConversationAnswerRepository.create(
         PipelineConversationAnswer.create({
           pipelineConversationQuestionId,
-          filename,
+          filename: file.getFileName(),
           text,
           duration,
         }),
@@ -70,15 +70,15 @@ class AnswersQuestionUseCase {
       );
 
       await this.storageGateway.save({
-        filename,
+        filename: file.getFileName(),
         folder: 'answer-audio',
-        content: fileBufer,
+        content: fileBuffer,
         contentType,
         fileSize,
       });
       await this.databaseConfig.commit();
 
-      const nextPipelineConversationQuestion =
+      const nextPipelineConversationQuestionId =
         await this.pipelineConversationQuestionQuery.getNextQuestionIdByPipelineConversation(
           {
             pipelineConversationId:
@@ -86,7 +86,7 @@ class AnswersQuestionUseCase {
           },
         );
 
-      if (!nextPipelineConversationQuestion) {
+      if (!nextPipelineConversationQuestionId) {
         this.mediator.notify<FinishPipelineConversationInput>({
           event: env.FINISH_PIPELINE_CONVERSATION_EVENT,
           data: {
@@ -100,13 +100,16 @@ class AnswersQuestionUseCase {
 
       this.mediator.notify<SendQuestionToUserInput>({
         event: env.SEND_QUESTION_TO_USER_EVENT,
-        data: { pipelineConversationQuestionId },
+        data: {
+          pipelineConversationQuestionId: nextPipelineConversationQuestionId,
+        },
       });
     } catch (error) {
       await this.databaseConfig.rollback();
       if (error instanceof HandleError) {
         throw error;
       }
+      console.error('error', error);
       throw new ExceptionError('Answers question', error);
     }
   }
