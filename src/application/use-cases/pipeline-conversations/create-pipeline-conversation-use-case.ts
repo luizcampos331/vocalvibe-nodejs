@@ -38,7 +38,7 @@ class CreatePipelineConversationUseCase {
             {
               role: 'system',
               content:
-                'You are a supreme expert in analyzing and creating logical sequences of questions based on a large list of them. Your objective is:\n- Identify the theme of the questions\n- Analyze all the questions\n- Create a logical sequence with 20 maximum questions of them\n- Return ONLY their numbers, separated by commas',
+                'You are a supreme expert in analyzing and creating logical sequences of questions based on a large list of them. Your objective is:\n- Analyze all the questions\n- Create a logical sequence with 20 maximum questions of them\n- Return ONLY their numbers, separated by commas',
             },
             {
               role: 'user',
