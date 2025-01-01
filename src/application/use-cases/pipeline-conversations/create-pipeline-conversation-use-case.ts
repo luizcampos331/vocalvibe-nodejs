@@ -30,7 +30,7 @@ class CreatePipelineConversationUseCase {
   public async execute(): Promise<CreatePipelineConversationOutput> {
     try {
       await this.databaseConfig.startTransaction();
-      const questions = await this.questionRepository.findAll();
+      const questions = await this.questionRepository.list();
 
       const { response, inputToken, outputToken } =
         await this.llmGateway.getResponseByText({

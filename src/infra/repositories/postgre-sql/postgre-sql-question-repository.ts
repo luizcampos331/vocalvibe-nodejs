@@ -8,7 +8,7 @@ import Question from '@/domain/entities/question';
 class PostgreSqlQuestionRepository implements IQuestionRepository {
   constructor(private readonly databaseConfig: IDatabaseConfig) {}
 
-  public async findAll(): Promise<Question[]> {
+  public async list(): Promise<Question[]> {
     const questions = await this.databaseConfig.query(
       `SELECT
         id,

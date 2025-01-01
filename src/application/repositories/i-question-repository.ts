@@ -1,7 +1,7 @@
 import Question from '@/domain/entities/question';
 
 export interface IQuestionRepository {
-  findAll(): Promise<Question[]>;
+  list(): Promise<Question[]>;
   findById(data: FindQuestionByIdInput): Promise<Question | null>;
   create(question: Question): Promise<void>;
 }
