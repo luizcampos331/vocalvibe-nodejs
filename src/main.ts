@@ -14,6 +14,7 @@ export let env: EnvProps;
     WebsocketGatewayFactory,
     PipelineConversationController,
     QuestionController,
+    OutputTaskController,
   } = await dynamicImports();
 
   const httpServer = new HttpFactory().make();
@@ -28,6 +29,7 @@ export let env: EnvProps;
 
   new PipelineConversationController(httpServer, mediator, websocketGateway);
   new QuestionController(httpServer);
+  new OutputTaskController(httpServer);
 
   httpServer.start(env.HTTP_PORT, () => {
     console.log(`HTTP server is running on port - ${env.HTTP_PORT}`);
@@ -50,6 +52,9 @@ async function dynamicImports() {
   const { default: QuestionController } = await import(
     './infra/controllers/question-controller'
   );
+  const { default: OutputTaskController } = await import(
+    './infra/controllers/output-task-controller'
+  );
 
   return {
     HttpFactory,
@@ -57,5 +62,6 @@ async function dynamicImports() {
     WebsocketGatewayFactory,
     PipelineConversationController,
     QuestionController,
+    OutputTaskController,
   };
 }

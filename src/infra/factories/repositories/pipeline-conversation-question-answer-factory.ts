@@ -13,7 +13,7 @@ class PipelineConversationAnswerRepositoryFactory {
   public make(databaseConfig: DatabaseConfig) {
     if (!Object.keys(implementations).includes(env.DATABASE_IMPLEMENTATION)) {
       throw new InfrastructureError(
-        'Invalid database implementation - pipeline conversation question',
+        'Invalid database implementation - pipeline conversation answer',
       );
     }
     return implementations[env.DATABASE_IMPLEMENTATION](databaseConfig);
